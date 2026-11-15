@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#10131e" />
+    <meta name="description" content="Explore how a tiny compiler turns arithmetic source code into tokens, a syntax tree, and a result." />
+    <title>Compiler Compass — Explore how code is understood</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Compiler Compass home"><span class="brand-mark">C<span>↗</span></span><span>compiler<span class="brand-light">compass</span></span></a>
+        <div class="top-meta"><span class="status-dot"></span> MINI COMPILER LAB <span class="version">v1.0</span></div>
+      </header>
+
+      <main id="top">
+        <section class="intro">
+          <div>
+            <p class="eyebrow">A guided tour through code</p>
+            <h1>From symbols<br />to <span>understanding.</span></h1>
+            <p class="intro-copy">Follow a tiny arithmetic expression through the first steps of a compiler. See how characters become tokens, tokens become a syntax tree, and the tree produces an answer.</p>
+          </div>
+          <aside class="intro-note"><span class="note-icon">λ</span><p><strong>A compiler reads in stages.</strong><br />Each stage transforms the program into a representation that is easier for the next stage to understand.</p></aside>
+        </section>
+
+        <section class="workbench" aria-labelledby="workbench-title">
+          <div class="workbench-heading"><div><p class="eyebrow">The workbench</p><h2 id="workbench-title">Inspect an expression</h2></div><span class="client-only">Runs locally in your browser</span></div>
+          <label class="field-label" for="sourceInput">SOURCE CODE <span>ARITHMETIC EXPRESSION</span></label>
+          <div class="editor-wrap"><span class="line-number" aria-hidden="true">01</span><textarea id="sourceInput" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="grammarHint">(12 + 3) * 4 - 8 / 2</textarea></div>
+          <div class="editor-footer"><p id="grammarHint">Supported: numbers, <code>+</code> <code>-</code> <code>*</code> <code>/</code>, and parentheses.</p><div class="actions"><button id="exampleButton" class="quiet-button" type="button">Try another example <span>↻</span></button><button id="compileButton" class="compile-button" type="button">Compile expression <span>→</span></button></div></div>
+          <p id="errorBanner" class="error-banner" role="alert" hidden></p>
+        </section>
+
+        <section class="pipeline" aria-label="Compiler pipeline">
+          <div class="pipeline-step active" data-stage="source"><span class="stage-number">01</span><span><strong>Source</strong><small>Raw characters</small></span><span class="stage-arrow">→</span></div>
+          <div class="pipeline-step" data-stage="tokens"><span class="stage-number">02</span><span><strong>Lexer</strong><small>Token stream</small></span><span class="stage-arrow">→</span></div>
+          <div class="pipeline-step" data-stage="ast"><span class="stage-number">03</span><span><strong>Parser</strong><small>Syntax tree</small></span><span class="stage-arrow">→</span></div>
+          <div class="pipeline-step" data-stage="result"><span class="stage-number">04</span><span><strong>Result</strong><small>Tree evaluation</small></span></div>
+        </section>
+
+        <section class="output-grid" aria-live="polite">
+          <article class="output-card token-card">
+            <div class="card-heading"><div><span class="card-kicker">STAGE 02 · LEXICAL ANALYSIS</span><h2>Token stream</h2></div><span id="tokenCount" class="count-pill">0 tokens</span></div>
+            <p class="card-description">The lexer groups characters into meaningful units. Whitespace separates tokens but is not itself a token.</p>
+            <div id="tokenOutput" class="token-output"><span class="empty-state">Compile an expression to inspect its tokens.</span></div>
+            <div class="legend"><span><i class="legend-number"></i> Number</span><span><i class="legend-operator"></i> Operator</span><span><i class="legend-paren"></i> Parenthesis</span></div>
+          </article>
+
+          <article class="output-card tree-card">
+            <div class="card-heading"><div><span class="card-kicker">STAGE 03 · SYNTAX ANALYSIS</span><h2>Abstract syntax tree</h2></div><span class="tree-tag">AST</span></div>
+            <p class="card-description">The parser uses operator precedence to organize tokens into a tree of operations.</p>
+            <div id="treeOutput" class="tree-output"><span class="empty-state">Your syntax tree will appear here.</span></div>
+          </article>
+        </section>
+
+        <section class="result-panel" id="resultPanel" aria-live="polite">
+          <div class="result-symbol">∑</div><div class="result-copy"><span class="card-kicker">STAGE 04 · EVALUATION</span><h2 id="resultTitle">Ready for a compile</h2><p id="resultDescription">The evaluator will walk the AST and calculate the expression.</p></div><output id="resultValue" class="result-value">—</output>
+        </section>
+
+        <section class="concepts">
+          <div class="concept-heading"><p class="eyebrow">The mental model</p><h2>Three stages. One clear path.</h2></div>
+          <div class="concept-grid">
+            <article><span class="concept-index">01 / LEX</span><h3>Recognize the pieces</h3><p>A lexer scans characters and labels numbers, operators, and punctuation as tokens.</p></article>
+            <article><span class="concept-index">02 / PARSE</span><h3>Understand the structure</h3><p>A parser applies grammar and precedence rules to build a tree that represents meaning.</p></article>
+            <article><span class="concept-index">03 / EVALUATE</span><h3>Walk the tree</h3><p>This demo evaluates the AST recursively. Real compilers may instead generate machine code.</p></article>
+          </div>
+        </section>
+
+        <footer class="footer"><span>COMPILER COMPASS <span class="footer-muted">· A TINY FRONT-END EXPLORER</span></span><span>Built for curious computer scientists <b>✳</b></span></footer>
+      </main>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
